@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+---------------------------------------revision Points----------------------------------------------------------
+
+1. We can't use any Hook conditionally it means inside if else condition but we can use if else conditions inside Hooks.
+Basically useEffect side Effect work ke liye use hota h matlab jo component pe depend ya relation na ho jaise backend ya server wagera ya kuchh bhi. IMP points ye hai ki useEffect ko agar [] dependencies pass na kre to wo run karega har baar jaise hi compo re render hoga state se pr agar empty [] pass krde as dependency to page relaod hone ke baad ek baar bs run hoga useEffect aur agar [] iske andar kuchh pass krte to wo jaise [count] to jb tk count change ni hoga increase ya decrease jb tk useEffect run ni karega re render se koi matlab ni fir.
