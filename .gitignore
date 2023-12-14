@@ -25,3 +25,74 @@ yarn-error.log*
 
 1. We can't use any Hook conditionally it means inside if else condition but we can use if else conditions inside Hooks.
 Basically useEffect side Effect work ke liye use hota h matlab jo component pe depend ya relation na ho jaise backend ya server wagera ya kuchh bhi. IMP points ye hai ki useEffect ko agar [] dependencies pass na kre to wo run karega har baar jaise hi compo re render hoga state se pr agar empty [] pass krde as dependency to page relaod hone ke baad ek baar bs run hoga useEffect aur agar [] iske andar kuchh pass krte to wo jaise [count] to jb tk count change ni hoga increase ya decrease jb tk useEffect run ni karega re render se koi matlab ni fir.
+
+----------------limitations of context API------------------------------
+Global State Management Overuse:
+Using context for all state can lead to a lack of clarity and maintainability.
+Component Re-renders:
+Changes in context trigger re-renders for all consuming components, potentially causing unnecessary updates.
+Complexity for Simple Cases:
+Overkill for simpler state management scenarios, adding unnecessary complexity.
+Difficulties with Testing:
+Testing components relying heavily on context may be challenging.
+API Changes:
+Context API updates may introduce breaking changes in your codebase.
+
+
+Local Component State: For simpler state management needs.
+State Management Libraries (e.g., Redux): For more complex state scenarios.
+Prop Drilling: Passing props explicitly between components when context is unnecessary.
+
+
+The useImperativeHandle hook in React allows you to customize the handle exposed as a ref. It takes a callback function as an argument, which will be called whenever the ref is used to access the component. This callback function can return any value or object that you want to expose to the parent component.
+
+React forwardRef is a feature that allows you to pass a ref to a child component from a parent component. It's often used when accessing the underlying DOM node or component instance of a child component from the parent component
+
+------------------------------IMP Concept and Question for Interview------------------------------
+
+What the hell are lifecycle ? How do we control each lifecycle in React ? What the hell are cleanup functions in react?
+
+1. Mounting Phase:
+constructor(): Initializes state and binds event handlers.
+static getDerivedStateFromProps(): Sets state based on initial props.
+render(): Renders the component.
+componentDidMount(): Executes after the component is rendered to the DOM. Used for data fetching and subscriptions.
+
+2. Updating Phase:
+static getDerivedStateFromProps(): Sets state based on updated props.
+shouldComponentUpdate(): Controls whether the component should re-render for performance optimization.
+render(): Re-renders the component.
+getSnapshotBeforeUpdate(): Captures information from the DOM before changes.
+componentDidUpdate(): Executes after the component is updated in the DOM. Used for side effects.
+
+3. Unmounting Phase:
+componentWillUnmount(): Executes just before the component is removed from the DOM. Used for cleanup tasks.
+Managing Lifecycles in Functional Components (with Hooks):
+
+Use useEffect to replicate componentDidMount, componentDidUpdate, and componentWillUnmount.
+Example:
+
+import React, { useEffect } from 'react';
+
+function MyComponent() {
+  // componentDidMount
+  useEffect(() => {
+    // Your code here
+    return () => {
+      // componentWillUnmount
+      // Cleanup code here
+    };
+  }, []); // Empty dependency array means this effect runs once, similar to componentDidMount
+
+  // ... rest of the component code
+
+  return (
+    // JSX of the component
+  );
+}
+
+export default MyComponent;
+
+Note jo clean up code h wo aisa work karta h= jaise pehle compo render hua to pehle useEffect ka cleanUp code return chalega pr clean krne ke liye kuchh h ni kyu ki first time render hua to ab render hone me jo value aayi wo to store ho gyi ab wapas second time re-render hone me fir pehle return clean up hoga to ab return last wala jo update hua tha wo clean karega taki current wale ke liye jagah ho aur memory leakage na ho. Return clean up will run first to clean for previous data then useEffecct fn will run for new data
+
+Cleanup functions in React are functions that handle the cleanup or teardown operations when a component is unmounted or updated. They are commonly associated with the useEffect Hook in functional components. Cleanup functions are specified in the useEffect dependency array or returned from the useEffect callback, and they help prevent memory leaks and handle resource management tasks, such as unsubscribing from subscriptions or canceling network requests.
